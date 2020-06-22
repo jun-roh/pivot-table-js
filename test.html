@@ -3,6 +3,8 @@
         <script src="js/jquery-3.5.1.min.js"></script>
         <script src="js/parameter.js"></script>
         <script src="js/alasql.js"></script>
+        <script src="js/ala_test.js"></script>
+
     </header>
 
     <style>
@@ -19,10 +21,9 @@
         <div id="test">
         </div>
     </body>
-
     <script type="text/javascript">
         
-        var row_field = ["row_val", "row_val_2"];
+        var row_field = ["row_val"];
         
         var col_field = ["co_val", "col_val_1"];
         
@@ -33,224 +34,68 @@
             field: "revenue",
             calculate: "avg"
         }]
-        
-        
-        // get pivot raw data
-        var field_str = 'SELECT ';
-        
-        for(var i in row_field)
-            field_str = field_str + row_field[i] + ','
-        
-        for(var i in col_field)
-            field_str = field_str + col_field[i] + ','
-        
-        var result_list = [];
-        
-        for(var i in aggregation_field){
-            var field = aggregation_field[i].field;
-            var calculate = aggregation_field[i].calculate;
-            var agg_field = ' ("'+calculate+' of " + '+row_field[0]+') AS '+calculate + '_' +field+', ['+field+'] FROM ? PIVOT ('+calculate+'(['+field+']) FOR '+calculate + '_' +field+')'
-            var qry = field_str + agg_field;
-            var data = alasql(qry, [parameter]);
-            result_list.push(data);
-        }
-        
-        // row_ list
-        var row_list = [];
-        
-        for(var i in row_field){
-            var qry = "SELECT DISTINCT("+row_field[i]+") as row_"+i+" from ?";
-            var data = alasql(qry, [parameter]);
-            row_list.push(data);
-        }
-        
-        // col_list
-        var col_list = [];
-        for(var i in col_field){
-            var qry = "SELECT DISTINCT("+col_field[i]+") as col_"+i+" from ?";
-            var data = alasql(qry, [parameter]);
-            col_list.push(data);
-        }
-        
-        var title_row = 0;
-        var title_col = 0;
-        
-        for(var i in row_list)
-            title_row += 1;
-        
-        for(var i in col_list)
-            title_col += 1;
-        
-        if(aggregation_field.length !== 0)
-            title_col += 1;
-        
-        
-        var html = '<table>'
-        for(var i in col_list){
-            html += '<tr>'
-            html += '<th colspan="'+title_row+'" rowspan="'+title_col+'"></th>'
-            for(var j in col_list[i]){
-                var val = col_list[i][j]['col_'+i]
-                html += '<td colspan="'+title_row*title_col+'">'+val+'</td>'
-            }
-            html += '</tr>'
-        }
-        
-        html += '</table>'
-        
-        $("#test").html(html);
-        console.log(html)
-    </script>
 
-    
-    
-<!--
-    <table>
-        <tr>
-            <th colspan = 2 rowspan="3"></th>
-            <th colspan = 6> aa</th>
-            <th colspan = 6> bb</th>
-            <th colspan = 6> cc</th>
-            <th colspan = 6> dd</th>
-        </tr>
-        <tr>
-            <th colspan="2">11</th>
-            <th colspan="2">22</th>
-            <th colspan="2">33</th>
-            <th colspan="2">11</th>
-            <th colspan="2">22</th>
-            <th colspan="2">33</th>
-            <th colspan="2">11</th>
-            <th colspan="2">22</th>
-            <th colspan="2">33</th>
-            <th colspan="2">11</th>
-            <th colspan="2">22</th>
-            <th colspan="2">33</th>
-        </tr>
-        <tr>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-            <th>SUM of revenue</th>
-            <th>AVG of revenue</th>
-        </tr>
-        <tr>
-            <td rowspan="3">as</td>
-            <td>as</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-        </tr>
-        <tr>
-            <td>sd</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-        </tr>
-        <tr>
-            <td>df</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-        </tr>
-    </table>
--->
-    
-<table>
-    <tr>
-        <th colspan="3" rowspan="2"></th>
-        <td colspan="6">as</td>
-        <td colspan="6">sd</td>
-        <td colspan="6">df</td>
-    </tr>
-    <tr>
-        <th colspan="3" rowspan="2"></th>
-        <td colspan="6">qq</td>
-        <td colspan="6">ee</td>
-        <td colspan="6">rr</td>
-        <td colspan="6">ww</td>
-    </tr>
-</table>
+        var result_list = getPivotQry(row_field, col_field, aggregation_field);
+        
+        // get row_ list
+        var row_list = getDistinctQry(row_field);
+        
+        // get col_list
+        var col_list = getDistinctQry(col_field);
+
+
+        var html = drawPivotTable(row_list, col_list, aggregation_field)
+        $("#test").html(html);
+
+        // row field_name 정의
+        var count_list = [];
+        for(var i in col_list){
+            count_list.push(col_list[i].length);
+        }
+        
+        count_list.push(aggregation_field.length);
+        
+        var result_data = [];
+
+        var aggregation_cnt = 1;
+        for(i in col_list){
+            aggregation_cnt = aggregation_cnt * col_list[i].length;
+        }
+
+        for(var i = 0; i < aggregation_cnt * aggregation_field.length; i ++){
+            result_data.push([]);
+        }
+        
+        for(var i in count_list){
+            var cnt = 0;
+            var co_cnt_1 = 1;
+            for(var j = Number(i) + 1; j < count_list.length; j ++){
+                co_cnt_1 = co_cnt_1 * count_list[j];
+            }
+            
+            var count_list_2 = $.extend(true, [], count_list);
+            count_list_2 = count_list_2.splice(0, i)
+            var co_cnt_2 = 1;
+            for(var j in count_list_2){
+                co_cnt_2 = co_cnt_2 * count_list_2[j];
+            }
+            if(Number(i) !== count_list.length - 1){
+                for(var m = 0; m < co_cnt_2; m++){
+                    for(var j in col_list[i]){
+                        for (var l = 0; l < co_cnt_1; l ++){
+                            result_data[cnt].push(col_list[i][j]['col_'+i])
+                            cnt++;
+                        }
+                    }    
+                }
+            }else{
+                for(var j = 0; j < aggregation_cnt; j++){
+                    for(var i in aggregation_field){
+                        result_data[cnt].push(aggregation_field[i].calculate + '_' + aggregation_field[i].field)
+                        cnt++;
+                    }
+                }
+            }
+        }
+    </script>
 </html>
