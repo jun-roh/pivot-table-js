@@ -22,80 +22,33 @@
         </div>
     </body>
     <script type="text/javascript">
-        
-        var row_field = ["row_val"];
-        
-        var col_field = ["co_val", "col_val_1"];
-        
-        var aggregation_field = [{
-            field: "revenue",
-            calculate: "sum"
-        },{
-            field: "revenue",
-            calculate: "avg"
-        }]
+        $(document).ready(function() {
+            var row_field = ["row_val", "row_val_1"];
+            var col_field = ["col_val", "col_val_1"];
+            var aggregation_field = [{
+                field: "revenue",
+                calculate: "sum"
+            },{
+                field: "revenue",
+                calculate: "avg"
+            }]
 
-        var result_list = getPivotQry(row_field, col_field, aggregation_field);
-        
-        // get row_ list
-        var row_list = getDistinctQry(row_field);
-        
-        // get col_list
-        var col_list = getDistinctQry(col_field);
+            // pivot cell 에 넣을 data
+            var result_list = getPivotQry(row_field, col_field, aggregation_field);
 
+            // pivot row 의 distinct data
+            var row_list = getDistinctQry(row_field);
 
-        var html = drawPivotTable(row_list, col_list, aggregation_field)
-        $("#test").html(html);
+            // pivot column 의 distinct data
+            var col_list = getDistinctQry(col_field);
 
-        // row field_name 정의
-        var count_list = [];
-        for(var i in col_list){
-            count_list.push(col_list[i].length);
-        }
-        
-        count_list.push(aggregation_field.length);
-        
-        var result_data = [];
+            // pivot mapping cell
+            var mapping_cell = setCellMapping(col_list, row_list, aggregation_field);
 
-        var aggregation_cnt = 1;
-        for(i in col_list){
-            aggregation_cnt = aggregation_cnt * col_list[i].length;
-        }
-
-        for(var i = 0; i < aggregation_cnt * aggregation_field.length; i ++){
-            result_data.push([]);
-        }
-        
-        for(var i in count_list){
-            var cnt = 0;
-            var co_cnt_1 = 1;
-            for(var j = Number(i) + 1; j < count_list.length; j ++){
-                co_cnt_1 = co_cnt_1 * count_list[j];
-            }
-            
-            var count_list_2 = $.extend(true, [], count_list);
-            count_list_2 = count_list_2.splice(0, i)
-            var co_cnt_2 = 1;
-            for(var j in count_list_2){
-                co_cnt_2 = co_cnt_2 * count_list_2[j];
-            }
-            if(Number(i) !== count_list.length - 1){
-                for(var m = 0; m < co_cnt_2; m++){
-                    for(var j in col_list[i]){
-                        for (var l = 0; l < co_cnt_1; l ++){
-                            result_data[cnt].push(col_list[i][j]['col_'+i])
-                            cnt++;
-                        }
-                    }    
-                }
-            }else{
-                for(var j = 0; j < aggregation_cnt; j++){
-                    for(var i in aggregation_field){
-                        result_data[cnt].push(aggregation_field[i].calculate + '_' + aggregation_field[i].field)
-                        cnt++;
-                    }
-                }
-            }
-        }
+            // // Draw pivot table
+            // // 현재까지는 Column Header 개발
+            // var html = drawPivotTable(row_list, col_list, aggregation_field)
+            // $("#test").html(html);
+        });
     </script>
 </html>
