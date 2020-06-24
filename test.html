@@ -1,10 +1,14 @@
 <html>
     <header>
+        <link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+
         <script src="js/jquery-3.5.1.min.js"></script>
         <script src="js/parameter.js"></script>
         <script src="js/alasql.js"></script>
         <script src="js/ala_test.js"></script>
-
+        <script src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/datatables.min.js"></script>
     </header>
 
     <style>
@@ -14,6 +18,8 @@
       }
       th, td {
         border: 1px solid #000000;
+          height: 15px;
+          text-align: center;
       }
     </style>
 
@@ -45,10 +51,50 @@
             // pivot mapping cell
             var mapping_cell = setCellMapping(col_list, row_list, aggregation_field);
 
-            // // Draw pivot table
-            // // 현재까지는 Column Header 개발
-            // var html = drawPivotTable(row_list, col_list, aggregation_field)
-            // $("#test").html(html);
+            // Draw pivot table
+            // 현재까지는 Column Header 개발
+            var html = drawPivotTable(row_list, col_list, aggregation_field, mapping_cell)
+            $("#test").html(html);
+
+            // set result data
+            for (var i in result_list){
+                for (var j in result_list[i]){
+                    var str = "";
+                    var last_cnt = row_field.length + col_field.length;
+                    var cur_cnt = 0;
+                    var cell_val = "";
+                    $.each(result_list[i][j], function(key, value){
+                        if (cur_cnt === last_cnt){
+                            str += key;
+                            cell_val = value;
+                        }else{
+                            str += value + "_";
+                        }
+                        cur_cnt++;
+                    });
+                    $("#" + str).html(cell_val);
+                }
+            }
+
+            var t = $("#pivot").DataTable({
+                columnDefs: [{
+                    orderable: false,
+                    targets: 0
+                }],
+                searching: false,
+                paging: true,
+                lengthChange: true,
+                lengthMenu: [10, 25, 50, 100, 250, 500, 1000],
+                pageLength: 10,
+                info: false,
+                aaSorting: false
+            });
+
+            t.on( 'order.dt search.dt', function () {
+                t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                    cell.innerHTML = i+1;
+                } );
+            } ).draw();
         });
     </script>
 </html>
