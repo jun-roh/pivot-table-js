@@ -167,7 +167,7 @@ var getDistinctQry = function(field_list){
     return distinct_list;
 }
 
-var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cell){
+var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cell, row_field, col_field){
     // Draw Table
     var title_row = 0;
     var title_col = 0;
@@ -185,6 +185,10 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
     html += '<thead>'
     for(var i in col_list){
         html += '<tr>'
+
+        if(Number(i) === 0){
+            html += '<th colspan="'+ (title_row) +'" rowspan="'+(title_col-1)+'"></th>'
+        }
 
         var colspan_cnt = 1;
         for(j = Number(i)+1; j < col_list.length; j++){
@@ -218,6 +222,9 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
         aggregation_cnt = aggregation_cnt * col_list[i].length;
     }
 
+    for (var j in row_field){
+        html += '<th>' + row_field[j] + '</th>'
+    }
     for(var j = 0; j < aggregation_cnt; j++){
         for(var i in aggregation_field){
             html += '<th>'+aggregation_field[i].calculate + ' of ' + aggregation_field[i].field+'</th>'
@@ -230,6 +237,8 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
     // data_set
     for (var i in mapping_cell){
         html += '<tr>'
+        html += '<td>1</td>';
+        html += '<td>2</td>';
         for (var j in mapping_cell[i]){
             html += '<td id="'+mapping_cell[i][j]+'">'
             html += '</td>'
@@ -238,6 +247,14 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
     }
 
     html += '</tbody>'
+    html += '<tfoot>'
+    var cell_count = row_field.length + mapping_cell[0].length;
+    html += '<tr>'
+    for (var i = 0; i < cell_count; i++){
+        html += '<th></th>'
+    }
+    html += '</tr>'
+    html += '</tfoot>'
     html += '</table>'
 
     return html;
