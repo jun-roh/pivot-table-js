@@ -1,735 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<table id="pivot">
+<header>
+    <link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/parameter.js"></script>
+    <script src="js/alasql.js"></script>
+    <script src="js/ala_test.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/datatables.min.js"></script>
+</header>
+<table>
     <tr>
-        <th colspan="8">
-            as
-        </th>
-        <th colspan="8">
-            df
-        </th>
-        <th colspan="8">
-            sd
-        </th>
+        <td>row1</td>
+        <td>row2</td>
+        <td>col1</td>
+        <td>col2</td>
     </tr>
     <tr>
-        <th colspan="2">
-            ee
-        </th>
-        <th colspan="2">
-            qq
-        </th>
-        <th colspan="2">
-            rr
-        </th>
-        <th colspan="2">
-            ww
-        </th>
-        <th colspan="2">
-            ee
-        </th>
-        <th colspan="2">
-            qq
-        </th>
-        <th colspan="2">
-            rr
-        </th>
-        <th colspan="2">
-            ww
-        </th>
-        <th colspan="2">
-            ee
-        </th>
-        <th colspan="2">
-            qq
-        </th>
-        <th colspan="2">
-            rr
-        </th>
-        <th colspan="2">
-            ww
-        </th>
-    </tr>
-    </>
-    <tr>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
-        <th>
-            sum of revenue
-        </th>
-        <th>
-            avg of revenue
-        </th>
+        <td rowspan="4">aa</td>
+        <td rowspan="2">11</td>
+        <td>q1</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
     <tr>
-        <td id="aa_11_as_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_11_as_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_11_as_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_11_as_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_11_as_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_11_as_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_11_as_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_11_as_ww_avg_revenue_aa">
-        </td>
-        <td id="aa_11_df_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_11_df_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_11_df_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_11_df_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_11_df_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_11_df_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_11_df_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_11_df_ww_avg_revenue_aa">
-        </td>
-        <td id="aa_11_sd_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_11_sd_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_11_sd_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_11_sd_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_11_sd_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_11_sd_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_11_sd_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_11_sd_ww_avg_revenue_aa">
-        </td>
+        <td>q2</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
     <tr>
-        <td id="aa_22_as_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_22_as_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_22_as_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_22_as_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_22_as_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_22_as_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_22_as_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_22_as_ww_avg_revenue_aa">
-        </td>
-        <td id="aa_22_df_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_22_df_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_22_df_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_22_df_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_22_df_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_22_df_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_22_df_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_22_df_ww_avg_revenue_aa">
-        </td>
-        <td id="aa_22_sd_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_22_sd_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_22_sd_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_22_sd_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_22_sd_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_22_sd_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_22_sd_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_22_sd_ww_avg_revenue_aa">
-        </td>
+        <td rowspan="2">22</td>
+        <td>q1</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
     <tr>
-        <td id="aa_33_as_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_33_as_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_33_as_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_33_as_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_33_as_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_33_as_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_33_as_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_33_as_ww_avg_revenue_aa">
-        </td>
-        <td id="aa_33_df_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_33_df_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_33_df_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_33_df_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_33_df_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_33_df_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_33_df_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_33_df_ww_avg_revenue_aa">
-        </td>
-        <td id="aa_33_sd_ee_sum_revenue_aa">
-        </td>
-        <td id="aa_33_sd_ee_avg_revenue_aa">
-        </td>
-        <td id="aa_33_sd_qq_sum_revenue_aa">
-        </td>
-        <td id="aa_33_sd_qq_avg_revenue_aa">
-        </td>
-        <td id="aa_33_sd_rr_sum_revenue_aa">
-        </td>
-        <td id="aa_33_sd_rr_avg_revenue_aa">
-        </td>
-        <td id="aa_33_sd_ww_sum_revenue_aa">
-        </td>
-        <td id="aa_33_sd_ww_avg_revenue_aa">
-        </td>
+        <td>q2</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
     <tr>
-        <td id="bb_11_as_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_11_as_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_11_as_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_11_as_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_11_as_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_11_as_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_11_as_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_11_as_ww_avg_revenue_bb">
-        </td>
-        <td id="bb_11_df_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_11_df_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_11_df_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_11_df_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_11_df_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_11_df_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_11_df_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_11_df_ww_avg_revenue_bb">
-        </td>
-        <td id="bb_11_sd_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_11_sd_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_11_sd_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_11_sd_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_11_sd_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_11_sd_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_11_sd_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_11_sd_ww_avg_revenue_bb">
-        </td>
+        <td rowspan="4">bb</td>
+        <td rowspan="2">11</td>
+        <td>q1</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
     <tr>
-        <td id="bb_22_as_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_22_as_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_22_as_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_22_as_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_22_as_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_22_as_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_22_as_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_22_as_ww_avg_revenue_bb">
-        </td>
-        <td id="bb_22_df_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_22_df_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_22_df_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_22_df_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_22_df_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_22_df_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_22_df_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_22_df_ww_avg_revenue_bb">
-        </td>
-        <td id="bb_22_sd_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_22_sd_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_22_sd_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_22_sd_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_22_sd_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_22_sd_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_22_sd_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_22_sd_ww_avg_revenue_bb">
-        </td>
+        <td>q2</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
     <tr>
-        <td id="bb_33_as_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_33_as_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_33_as_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_33_as_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_33_as_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_33_as_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_33_as_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_33_as_ww_avg_revenue_bb">
-        </td>
-        <td id="bb_33_df_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_33_df_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_33_df_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_33_df_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_33_df_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_33_df_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_33_df_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_33_df_ww_avg_revenue_bb">
-        </td>
-        <td id="bb_33_sd_ee_sum_revenue_bb">
-        </td>
-        <td id="bb_33_sd_ee_avg_revenue_bb">
-        </td>
-        <td id="bb_33_sd_qq_sum_revenue_bb">
-        </td>
-        <td id="bb_33_sd_qq_avg_revenue_bb">
-        </td>
-        <td id="bb_33_sd_rr_sum_revenue_bb">
-        </td>
-        <td id="bb_33_sd_rr_avg_revenue_bb">
-        </td>
-        <td id="bb_33_sd_ww_sum_revenue_bb">
-        </td>
-        <td id="bb_33_sd_ww_avg_revenue_bb">
-        </td>
+        <td rowspan="2">22</td>
+        <td>q1</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
     <tr>
-        <td id="cc_11_as_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_11_as_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_11_as_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_11_as_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_11_as_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_11_as_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_11_as_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_11_as_ww_avg_revenue_cc">
-        </td>
-        <td id="cc_11_df_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_11_df_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_11_df_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_11_df_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_11_df_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_11_df_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_11_df_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_11_df_ww_avg_revenue_cc">
-        </td>
-        <td id="cc_11_sd_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_11_sd_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_11_sd_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_11_sd_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_11_sd_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_11_sd_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_11_sd_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_11_sd_ww_avg_revenue_cc">
-        </td>
-    </tr>
-    <tr>
-        <td id="cc_22_as_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_22_as_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_22_as_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_22_as_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_22_as_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_22_as_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_22_as_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_22_as_ww_avg_revenue_cc">
-        </td>
-        <td id="cc_22_df_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_22_df_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_22_df_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_22_df_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_22_df_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_22_df_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_22_df_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_22_df_ww_avg_revenue_cc">
-        </td>
-        <td id="cc_22_sd_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_22_sd_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_22_sd_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_22_sd_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_22_sd_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_22_sd_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_22_sd_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_22_sd_ww_avg_revenue_cc">
-        </td>
-    </tr>
-    <tr>
-        <td id="cc_33_as_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_33_as_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_33_as_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_33_as_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_33_as_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_33_as_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_33_as_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_33_as_ww_avg_revenue_cc">
-        </td>
-        <td id="cc_33_df_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_33_df_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_33_df_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_33_df_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_33_df_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_33_df_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_33_df_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_33_df_ww_avg_revenue_cc">
-        </td>
-        <td id="cc_33_sd_ee_sum_revenue_cc">
-        </td>
-        <td id="cc_33_sd_ee_avg_revenue_cc">
-        </td>
-        <td id="cc_33_sd_qq_sum_revenue_cc">
-        </td>
-        <td id="cc_33_sd_qq_avg_revenue_cc">
-        </td>
-        <td id="cc_33_sd_rr_sum_revenue_cc">
-        </td>
-        <td id="cc_33_sd_rr_avg_revenue_cc">
-        </td>
-        <td id="cc_33_sd_ww_sum_revenue_cc">
-        </td>
-        <td id="cc_33_sd_ww_avg_revenue_cc">
-        </td>
-    </tr>
-    <tr>
-        <td id="dd_11_as_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_11_as_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_11_as_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_11_as_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_11_as_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_11_as_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_11_as_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_11_as_ww_avg_revenue_dd">
-        </td>
-        <td id="dd_11_df_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_11_df_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_11_df_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_11_df_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_11_df_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_11_df_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_11_df_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_11_df_ww_avg_revenue_dd">
-        </td>
-        <td id="dd_11_sd_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_11_sd_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_11_sd_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_11_sd_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_11_sd_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_11_sd_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_11_sd_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_11_sd_ww_avg_revenue_dd">
-        </td>
-    </tr>
-    <tr>
-        <td id="dd_22_as_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_22_as_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_22_as_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_22_as_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_22_as_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_22_as_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_22_as_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_22_as_ww_avg_revenue_dd">
-        </td>
-        <td id="dd_22_df_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_22_df_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_22_df_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_22_df_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_22_df_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_22_df_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_22_df_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_22_df_ww_avg_revenue_dd">
-        </td>
-        <td id="dd_22_sd_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_22_sd_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_22_sd_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_22_sd_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_22_sd_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_22_sd_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_22_sd_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_22_sd_ww_avg_revenue_dd">
-        </td>
-    </tr>
-    <tr>
-        <td id="dd_33_as_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_33_as_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_33_as_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_33_as_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_33_as_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_33_as_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_33_as_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_33_as_ww_avg_revenue_dd">
-        </td>
-        <td id="dd_33_df_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_33_df_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_33_df_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_33_df_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_33_df_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_33_df_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_33_df_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_33_df_ww_avg_revenue_dd">
-        </td>
-        <td id="dd_33_sd_ee_sum_revenue_dd">
-        </td>
-        <td id="dd_33_sd_ee_avg_revenue_dd">
-        </td>
-        <td id="dd_33_sd_qq_sum_revenue_dd">
-        </td>
-        <td id="dd_33_sd_qq_avg_revenue_dd">
-        </td>
-        <td id="dd_33_sd_rr_sum_revenue_dd">
-        </td>
-        <td id="dd_33_sd_rr_avg_revenue_dd">
-        </td>
-        <td id="dd_33_sd_ww_sum_revenue_dd">
-        </td>
-        <td id="dd_33_sd_ww_avg_revenue_dd">
-        </td>
+        <td>q2</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
 </table>
-</body>
-</html>
+
+
+<script>
+    var row_field = [['aa','bb'], [11,22], ['q1','q2']];
+    var mapping = [[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1]];
+
+    var row_cnt =[]
+    for (var i = 0; i < row_field.length; i++){
+        var sum = 1;
+        for (var j = i+1; j < row_field.length; j++){
+            sum *= row_field[j].length;
+        }
+        row_cnt.push(sum);
+    }
+
+    var row_list = [];
+    for (var i in mapping){
+        row_list.push([]);
+    }
+
+    for (var i in row_cnt){
+        if (row_cnt[i] !== 1){
+            for (var j = 0; j < mapping.length; j++){
+                if (j%row_cnt[i] === 0){
+                    if (j === 0)
+                        row_list[0].push(row_cnt[i])
+                    else
+                        row_list[j].push(row_cnt[i])
+                }
+            }
+        }else{
+            for (var j = 0; j < mapping.length; j++){
+                row_list[j].push(1);
+            }
+        }
+    }
+
+    // row count list
+    var row_count_list = [];
+    for(var i in row_field){
+        row_count_list.push(row_field[i].length);
+    }
+
+    var total_row_cnt = 1;
+    for(i in row_count_list){
+        total_row_cnt = total_row_cnt * row_count_list[i];
+    }
+
+    var row_mapping_list = [];
+    // prepare row_mapping_list(columns)
+    for(var i = 0; i < total_row_cnt; i ++){
+        row_mapping_list.push([]);
+    }
+
+    for (var i in row_count_list){
+        var cnt = 0;
+
+        // i를 기준으로 후위 필드 cnt
+        var row_cnt_1 = 1;
+        for(var j = Number(i) + 1; j < row_count_list.length; j ++){
+            row_cnt_1 = row_cnt_1 * row_count_list[j];
+        }
+
+        // i를 기준으로 전위 필드 cnt
+        var count_list_2 = $.extend(true, [], row_count_list);
+        count_list_2 = count_list_2.splice(0, i)
+        var row_cnt_2 = 1;
+        for(var j in count_list_2){
+            row_cnt_2 = row_cnt_2 * count_list_2[j];
+        }
+
+        // columns 기준으로 cell 값 넣기
+        for(var m = 0; m < row_cnt_2; m++){
+            for(var j in row_field[i]){
+                for (var l = 0; l < row_cnt_1; l ++){
+                    row_mapping_list[cnt].push(row_field[i][j])
+                    cnt++;
+                }
+            }
+        }
+    }
+
+    var result_rows = [];
+
+    // for (var i in row_list){
+    //     var html  = '';
+    //     var cnt = 0;
+    //     for (var j = row_mapping_list[i].length - row_list[i].length; j < row_mapping_list[i].length; j ++){
+    //         html += '<td rowspan="'+row_list[i][cnt]+'">'+row_mapping_list[i][j]+'</td>'
+    //         cnt++;
+    //     }
+    //     result_rows.push(html)
+    // }
+    console.log(row_list);
+    console.log(row_mapping_list);
+    for (var i in row_list){
+
+    }
+
+    console.log(result_rows)
+
+</script>

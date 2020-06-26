@@ -235,10 +235,14 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
     html += '</thead>'
     html += '<tbody>'
     // data_set
+
+    var rowspan_list = getRowspan(row_list, mapping_cell);
+
     for (var i in mapping_cell){
         html += '<tr>'
-        html += '<td>1</td>';
-        html += '<td>2</td>';
+        for (var j in rowspan_list[i]){
+            html += '<td>'+rowspan_list[i][j]+'</td>'
+        }
         for (var j in mapping_cell[i]){
             html += '<td id="'+mapping_cell[i][j]+'">'
             html += '</td>'
@@ -250,7 +254,8 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
     html += '<tfoot>'
     var cell_count = row_field.length + mapping_cell[0].length;
     html += '<tr>'
-    for (var i = 0; i < cell_count; i++){
+    html += '<th colspan="'+row_field.length+'">Total : </th>'
+    for (var i = row_field.length; i < cell_count; i++){
         html += '<th></th>'
     }
     html += '</tr>'
@@ -258,4 +263,85 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
     html += '</table>'
 
     return html;
+}
+
+
+var getRowspan = function(row_field, mapping){
+    var row_cnt =[]
+    for (var i = 0; i < row_field.length; i++){
+        var sum = 1;
+        for (var j = i+1; j < row_field.length; j++){
+            sum *= row_field[j].length;
+        }
+        row_cnt.push(sum);
+    }
+
+    var row_list = [];
+    for (var i in mapping){
+        row_list.push([]);
+    }
+
+    for (var i in row_cnt){
+        if (row_cnt[i] !== 1){
+            for (var j = 0; j < mapping.length; j++){
+                if (j%row_cnt[i] === 0){
+                    if (j === 0)
+                        row_list[0].push(row_cnt[i])
+                    else
+                        row_list[j].push(row_cnt[i])
+                }
+            }
+        }else{
+            for (var j = 0; j < mapping.length; j++){
+                row_list[j].push(1);
+            }
+        }
+    }
+
+    // row count list
+    var row_count_list = [];
+    for(var i in row_field){
+        row_count_list.push(row_field[i].length);
+    }
+
+    var total_row_cnt = 1;
+    for(i in row_count_list){
+        total_row_cnt = total_row_cnt * row_count_list[i];
+    }
+
+    var row_mapping_list = [];
+    // prepare row_mapping_list(columns)
+    for(var i = 0; i < total_row_cnt; i ++){
+        row_mapping_list.push([]);
+    }
+
+    for (var i in row_count_list){
+        var cnt = 0;
+
+        // i를 기준으로 후위 필드 cnt
+        var row_cnt_1 = 1;
+        for(var j = Number(i) + 1; j < row_count_list.length; j ++){
+            row_cnt_1 = row_cnt_1 * row_count_list[j];
+        }
+
+        // i를 기준으로 전위 필드 cnt
+        var count_list_2 = $.extend(true, [], row_count_list);
+        count_list_2 = count_list_2.splice(0, i)
+        var row_cnt_2 = 1;
+        for(var j in count_list_2){
+            row_cnt_2 = row_cnt_2 * count_list_2[j];
+        }
+
+        // columns 기준으로 cell 값 넣기
+        for(var m = 0; m < row_cnt_2; m++){
+            for(var j in row_field[i]){
+                for (var l = 0; l < row_cnt_1; l ++){
+                    row_mapping_list[cnt].push(row_field[i][j])
+                    cnt++;
+                }
+            }
+        }
+    }
+
+    return row_mapping_list;
 }

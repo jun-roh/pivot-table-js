@@ -7,8 +7,10 @@
         <script src="js/parameter.js"></script>
         <script src="js/alasql.js"></script>
         <script src="js/ala_test.js"></script>
+
         <script src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/datatables.min.js"></script>
+        <script src="js/dataTables.rowsGroup.js"></script>
     </header>
 
     <style>
@@ -76,6 +78,11 @@
                 }
             }
 
+            var row_group_list = [];
+            for (var i in row_field){
+                row_group_list.push(i)
+            }
+
             // set datatables
             var t = $("#pivot").DataTable({
                 searching: false,
@@ -85,11 +92,7 @@
                 pageLength: 10,
                 info: false,
                 ordering: false,
-                columnDefs: [{
-                    searchable: false,
-                    orderable: false,
-                    targets: [0,1]
-                }],
+                rowsGroup:row_group_list,
                 footerCallback: function(row, data, start, end, display){
                     var api = this.api(), data;
                     var intVal = function ( i ) {
@@ -98,17 +101,15 @@
                             typeof i === 'number' ?
                                 i : 0;
                     };
-
                     var cell_count = row_field.length + mapping_cell[0].length;
-
-                    for (var i = 0; i < cell_count; i++){
+                    var row_count = row_field.length;
+                    for (var i = 3; i < cell_count; i++){
                         var sum_col = api
                             .column(i)
                             .data()
                             .reduce(function (a, b) {
                                 return intVal(a) + intVal(b);
                             }, 0);
-
                         $(api.column(i).footer()).html(sum_col);
                     }
                 }
