@@ -212,6 +212,11 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
                 html += '<th colspan="'+colspan_cnt*(aggregation_field.length)+'">'+val+'</th>'
             }
         }
+
+        if(Number(i) === 0){
+            html += '<th rowspan="'+(title_col)+'"></th>'
+        }
+
         html += '</tr>'
     }
     // aggregation
@@ -247,6 +252,7 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
             html += '<td id="'+mapping_cell[i][j]+'">'
             html += '</td>'
         }
+        html += '<td></td>'
         html += '</tr>'
     }
 
@@ -255,7 +261,7 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
     var cell_count = row_field.length + mapping_cell[0].length;
     html += '<tr>'
     html += '<th colspan="'+row_field.length+'">Total : </th>'
-    for (var i = row_field.length; i < cell_count; i++){
+    for (var i = row_field.length; i < cell_count + 1; i++){
         html += '<th></th>'
     }
     html += '</tr>'
@@ -345,3 +351,11 @@ var getRowspan = function(row_field, mapping){
 
     return row_mapping_list;
 }
+
+// 숫자 값 확인
+var intVal = function ( i ) {
+    return typeof i === 'string' ?
+        i.replace(/[\$,]/g, '')*1 :
+        typeof i === 'number' ?
+            i : 0;
+};
