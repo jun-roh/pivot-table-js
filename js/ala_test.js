@@ -181,7 +181,7 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
     if(aggregation_field.length !== 0)
         title_col += 1;
 
-    var html = '<table id="pivot">'
+    var html = '<table id="pivot" style="width:100%">'
     html += '<thead>'
     for(var i in col_list){
         html += '<tr>'
@@ -214,7 +214,7 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
         }
 
         if(Number(i) === 0){
-            html += '<th rowspan="'+(title_col)+'"></th>'
+            html += '<th rowspan="'+(title_col)+'">Total: </th>'
         }
 
         html += '</tr>'
@@ -252,12 +252,12 @@ var drawPivotTable = function(row_list, col_list, aggregation_field, mapping_cel
             html += '<td id="'+mapping_cell[i][j]+'">'
             html += '</td>'
         }
-        html += '<td></td>'
+        html += '<td id="row_total_'+i+'"></td>'
         html += '</tr>'
     }
 
     html += '</tbody>'
-    html += '<tfoot>'
+    html += '<tfoot id="pivot_footer">'
     var cell_count = row_field.length + mapping_cell[0].length;
     html += '<tr>'
     html += '<th colspan="'+row_field.length+'">Total : </th>'
