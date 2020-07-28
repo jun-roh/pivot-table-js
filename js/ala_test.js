@@ -359,3 +359,169 @@ var intVal = function ( i ) {
         typeof i === 'number' ?
             i : 0;
 };
+
+
+function getPivotTable(row_field, col_field, aggregation_field) {
+    // pivot cell 에 넣을 data
+    var result_list = getPivotQry(row_field, col_field, aggregation_field);
+
+    // pivot row 의 distinct data
+    var row_list = getDistinctQry(row_field);
+
+    // pivot column 의 distinct data
+    var col_list = getDistinctQry(col_field);
+
+    // pivot mapping cell
+    mapping_cell = setCellMapping(col_list, row_list, aggregation_field);
+
+    // Draw pivot table
+    // 현재까지는 Column Header 개발
+    var html = drawPivotTable(row_list, col_list, aggregation_field, mapping_cell, row_field, col_field)
+    $("#test").html(html);
+
+    console.log(html)
+    // set result data
+    for (var i in result_list){
+        for (var j in result_list[i]){
+            var str = "";
+            var last_cnt = row_field.length + col_field.length;
+            var cur_cnt = 0;
+            var cell_val = "";
+            $.each(result_list[i][j], function(key, value){
+                if (cur_cnt === last_cnt){
+                    str += key;
+                    cell_val = value;
+                }else{
+                    str += value + "_";
+                }
+                cur_cnt++;
+            });
+            $("#" + str).html(cell_val);
+        }
+    }
+
+    for (var i in mapping_cell){
+        var sum = 0;
+        for (var j in mapping_cell[i]){
+            sum = sum + intVal($("#"+mapping_cell[i][j]).text())
+        }
+        $("#row_total_"+i).html(sum);
+    }
+
+    var row_group_list = [];
+    for (var i in row_field){
+        row_group_list.push(i)
+    }
+
+    // set datatables
+    t = $("#pivot").DataTable({
+        searching: false,
+        paging: true,
+        lengthChange: true,
+        lengthMenu: [10, 25, 50, 100, 250, 500, 1000],
+        pageLength: 10,
+        info: false,
+        ordering: false,
+        columnDefs: [{
+            render: function (data, type, row) {
+                var sum = 0;
+                for (var j = row_field.length; j < mapping_cell[0].length + row_field.length -1; j++){
+                    sum = sum + intVal(row[j]);
+                }
+                return sum
+            },
+            targets: row_field.length + mapping_cell[0].length
+        }],
+        rowsGroup:row_group_list,
+        drawCallback: function (settings) {
+            var api = this.api();
+            var rows = api.rows( {page:'all'} ).nodes();
+            var last = null;
+
+            var title_cnt = (row_field.length);
+            var data_cnt = (mapping_cell[0].length);
+
+            // Remove the formatting to get integer data for summation
+            var total = [];
+
+            api.column(0, {page:'all'}).data().each(function (group, i) {
+                var group_assoc = group.replace(' ', "_");
+
+                if (typeof total[group_assoc] != 'undefined'){
+                    for (var j = 0; j < data_cnt + 1; j++){
+                        total[group_assoc][j] = total[group_assoc][j] + intVal(api.column(j + title_cnt).data()[i])
+                    }
+                }else{
+                    var row_data = [];
+                    for (var j = 0; j < data_cnt + 1; j++){
+                        row_data.push(intVal(api.column(Number(j) + Number(title_cnt)).data()[i]))
+                    }
+                    total[group_assoc] = $.extend(true, [], row_data);
+                }
+            });
+            api.column(0, {page:'all'}).data().each(function (group, i) {
+                var group_assoc = group.replace(' ', "_");
+                if (last !== group){
+                    var html = '<tr class="group">'
+                    html += '<td colspan="'+title_cnt+'">'+group_assoc+' Total : </td>'
+                    var row_list = $.extend(true, [], total[group_assoc]);
+                    var cell_cnt = data_cnt;
+                    if (row_total_chk)
+                        cell_cnt++;
+                    for (var j = 0; j < cell_cnt; j ++){
+                        html += '<td>'+row_list[j]+'</td>'
+                    }
+                    html += '</tr>'
+                    $(rows).eq(i).before(html);
+                    last = group;
+                }
+            });
+            for (var key in total){
+                $("." + key).html("$" + total[key]);
+            }
+        },
+        footerCallback: function(row, data, start, end, display){
+            var api = this.api(), data;
+            var cell_count = row_field.length + mapping_cell[0].length;
+            if (row_total_chk)
+                cell_count++;
+            for (var i = 3; i < cell_count; i++){
+                var sum_col = api
+                    .column(i)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                $(api.column(i).footer()).html(sum_col);
+            }
+        }
+    });
+}
+
+function showFooter() {
+    $('#pivot_footer').show();
+}
+function hideFooter() {
+    $('#pivot_footer').hide();
+}
+function showRightSum() {
+    row_total_chk = true;
+    var total_cnt = row_field.length + mapping_cell[0].length;
+    var column = t.column(total_cnt);
+    column.visible(row_total_chk)
+    t.draw();
+}
+function hideRightSum(){
+    row_total_chk = false;
+    var total_cnt = row_field.length + mapping_cell[0].length;
+    console.log(total_cnt)
+    var column = t.column(total_cnt);
+    column.visible(row_total_chk)
+    t.draw();
+}
+function showSubTotal() {
+    $(".group").show();
+}
+function hideSubTotal() {
+    $(".group").hide();
+}
