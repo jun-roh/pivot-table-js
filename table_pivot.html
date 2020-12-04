@@ -16,7 +16,10 @@
         <!-- js Parameter -->
         <script src="js/parameter.js"></script>
         <!-- js Pivot Tables logic -->
-        <script src="js/ala_test.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/pivot_table/pivot_dao.js"></script>
+        <script src="js/pivot_table/pivot_table.js"></script>
+
     </header>
 
     <style>
@@ -90,22 +93,20 @@
     <script type="text/javascript">
         var row_total_chk = true;
         var mapping_cell = [];
-        var row_field = [];
-        var col_field = [];
-        var aggregation_field = [];
         var t = $("#pivot").DataTable({})
 
         $(document).ready(function() {
-            row_field = ["row_val", "row_val_1"];
-            col_field = ["col_val"];
-            aggregation_field = [{
-                field: "revenue",
+            var row_field = [{key: "row_val"}, {key: "row_val_1"}];
+            var col_field = [{key: "col_val"}, {key: "col_val_1"}];
+            var aggregation_field = [{
+                key: "agg_val_1",
                 calculate: "sum"
             },{
-                field: "revenue",
+                key: "agg_val_2",
                 calculate: "avg"
-            }]
-            getPivotTable(row_field, col_field, aggregation_field)
+            }];
+            var data_list = parameter;
+            setPivotTable('result_pivot', 'raw', true, data_list, row_field, col_field, aggregation_field);
         });
     </script>
 </html>

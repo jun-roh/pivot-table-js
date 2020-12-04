@@ -5,9 +5,9 @@ var parameter = [
       "row_val_1": "11",
       "col_val": "as",
       "col_val_1": "qq",
-      "revenue": 114,
-      "pu": 68,
-      "cu": 113
+      "agg_val_1": 114,
+      "agg_val_2": 68,
+      "agg_val_3": 113
    },
    {
       "seq": 2,
@@ -15,9 +15,9 @@ var parameter = [
       "row_val_1": "22",
       "col_val": "sd",
       "col_val_1": "ee",
-      "revenue": 49,
-      "pu": 66,
-      "cu": 59
+      "agg_val_1": 49,
+      "agg_val_2": 66,
+      "agg_val_3": 59
    },
    {
       "seq": 3,
@@ -25,9 +25,9 @@ var parameter = [
       "row_val_1": "33",
       "col_val": "df",
       "col_val_1": "rr",
-      "revenue": 90,
-      "pu": 73,
-      "cu": 99
+      "agg_val_1": 90,
+      "agg_val_2": 73,
+      "agg_val_3": 99
    },
    {
       "seq": 4,
@@ -35,9 +35,9 @@ var parameter = [
       "row_val_1": "11",
       "col_val": "as",
       "col_val_1": "ww",
-      "revenue": 66,
-      "pu": 52,
-      "cu": 71
+      "agg_val_1": 66,
+      "agg_val_2": 52,
+      "agg_val_3": 71
    },
    {
       "seq": 5,
@@ -45,9 +45,9 @@ var parameter = [
       "row_val_1": "22",
       "col_val": "df",
       "col_val_1": "qq",
-      "revenue": 113,
-      "pu": 71,
-      "cu": 104
+      "agg_val_1": 113,
+      "agg_val_2": 71,
+      "agg_val_3": 104
    },
    {
       "seq": 6,
@@ -55,9 +55,9 @@ var parameter = [
       "row_val_1": "33",
       "col_val": "sd",
       "col_val_1": "rr",
-      "revenue": 68,
-      "pu": 73,
-      "cu": 65
+      "agg_val_1": 68,
+      "agg_val_2": 73,
+      "agg_val_3": 65
    },
    {
       "seq": 7,
@@ -65,9 +65,9 @@ var parameter = [
       "row_val_1": "33",
       "col_val": "df",
       "col_val_1": "ww",
-      "revenue": 60,
-      "pu": 81,
-      "cu": 55
+      "agg_val_1": 60,
+      "agg_val_2": 81,
+      "agg_val_3": 55
    },
    {
       "seq": 8,
@@ -75,9 +75,9 @@ var parameter = [
       "row_val_1": "22",
       "col_val": "sd",
       "col_val_1": "qq",
-      "revenue": 47,
-      "pu": 80,
-      "cu": 56
+      "agg_val_1": 47,
+      "agg_val_2": 80,
+      "agg_val_3": 56
    },
    {
       "seq": 9,
@@ -85,9 +85,9 @@ var parameter = [
       "row_val_1": "11",
       "col_val": "as",
       "col_val_1": "ee",
-      "revenue": 36,
-      "pu": 82,
-      "cu": 40
+      "agg_val_1": 36,
+      "agg_val_2": 82,
+      "agg_val_3": 40
    },
    {
       "seq": 10,
@@ -95,9 +95,9 @@ var parameter = [
       "row_val_1": "22",
       "col_val": "sd",
       "col_val_1": "rr",
-      "revenue": 56,
-      "pu": 88,
-      "cu": 51
+      "agg_val_1": 56,
+      "agg_val_2": 88,
+      "agg_val_3": 51
    },
    {
       "seq": 11,
@@ -105,9 +105,9 @@ var parameter = [
       "row_val_1": "11",
       "col_val": "as",
       "col_val_1": "qq",
-      "revenue": 38,
-      "pu": 80,
-      "cu": 39
+      "agg_val_1": 38,
+      "agg_val_2": 80,
+      "agg_val_3": 39
    },
    {
       "seq": 12,
@@ -115,9 +115,9 @@ var parameter = [
       "row_val_1": "22",
       "col_val": "sd",
       "col_val_1": "ee",
-      "revenue": 56,
-      "pu": 86,
-      "cu": 45
+      "agg_val_1": 56,
+      "agg_val_2": 86,
+      "agg_val_3": 45
    },
    {
       "seq": 13,
@@ -125,9 +125,9 @@ var parameter = [
       "row_val_1": "33",
       "col_val": "df",
       "col_val_1": "rr",
-      "revenue": 59,
-      "pu": 82,
-      "cu": 56
+      "agg_val_1": 59,
+      "agg_val_2": 82,
+      "agg_val_3": 56
    },
    {
       "seq": 14,
@@ -135,9 +135,9 @@ var parameter = [
       "row_val_1": "11",
       "col_val": "as",
       "col_val_1": "ww",
-      "revenue": 38,
-      "pu": 92,
-      "cu": 49
+      "agg_val_1": 38,
+      "agg_val_2": 92,
+      "agg_val_3": 49
    },
    {
       "seq": 15,
@@ -145,9 +145,9 @@ var parameter = [
       "row_val_1": "22",
       "col_val": "df",
       "col_val_1": "qq",
-      "revenue": 51,
-      "pu": 95,
-      "cu": 43
+      "agg_val_1": 51,
+      "agg_val_2": 95,
+      "agg_val_3": 43
    },
    {
       "seq": 16,
@@ -155,9 +155,9 @@ var parameter = [
       "row_val_1": "33",
       "col_val": "sd",
       "col_val_1": "rr",
-      "revenue": 52,
-      "pu": 88,
-      "cu": 53
+      "agg_val_1": 52,
+      "agg_val_2": 88,
+      "agg_val_3": 53
    },
    {
       "seq": 17,
@@ -165,9 +165,9 @@ var parameter = [
       "row_val_1": "33",
       "col_val": "df",
       "col_val_1": "ww",
-      "revenue": 68,
-      "pu": 104,
-      "cu": 76
+      "agg_val_1": 68,
+      "agg_val_2": 104,
+      "agg_val_3": 76
    },
    {
       "seq": 18,
@@ -175,9 +175,9 @@ var parameter = [
       "row_val_1": "22",
       "col_val": "sd",
       "col_val_1": "qq",
-      "revenue": 59,
-      "pu": 94,
-      "cu": 56
+      "agg_val_1": 59,
+      "agg_val_2": 94,
+      "agg_val_3": 56
    },
    {
       "seq": 19,
@@ -185,9 +185,9 @@ var parameter = [
       "row_val_1": "11",
       "col_val": "as",
       "col_val_1": "ee",
-      "revenue": 61,
-      "pu": 93,
-      "cu": 61
+      "agg_val_1": 61,
+      "agg_val_2": 93,
+      "agg_val_3": 61
    },
    {
       "seq": 20,
@@ -195,8 +195,8 @@ var parameter = [
       "row_val_1": "22",
       "col_val": "sd",
       "col_val_1": "rr",
-      "revenue": 45,
-      "pu": 78,
-      "cu": 44
+      "agg_val_1": 45,
+      "agg_val_2": 78,
+      "agg_val_3": 44
    }
 ]
