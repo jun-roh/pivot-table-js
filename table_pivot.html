@@ -9,6 +9,7 @@
         <script src="js/jquery/jquery-3.5.1.min.js"></script>
         <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/datatables/datatables.min.js"></script>
+        <!--        <script type="text/javascript" src="js/datatables/dataTables.rowGroup.min.js"></script>-->
         <script type="text/javascript" src="js/datatables/dataTables.rowsGroup.js"></script>
         <script src="js/alasql/alasql.js"></script>
 
@@ -35,7 +36,8 @@
         }
 
         div.container {
-            width: 80%;
+            width: 100%;
+            margin: 2rem;
         }
 
         .row {
@@ -44,6 +46,7 @@
     </style>
 
     <body>
+    <div class="container">
         <div class="row">
             <div class="col-lg-2">
                 <div>
@@ -76,8 +79,13 @@
                 </div>
             </div>
         </div>
-        <div id="test" style="width: 100%">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div id="test" style="width: 100%">
+            </div>
         </div>
+    </div>
     </body>
     <script type="text/javascript">
         var row_total_chk = true;

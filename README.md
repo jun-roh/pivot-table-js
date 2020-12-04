@@ -2,7 +2,7 @@
 
 ### Javascript Pivot Table Project
 
-####[개발 배경]
+#### [개발 배경]
 
 기존의 javascript 기반의 pivot table 조사
 
@@ -21,8 +21,13 @@ Open Source 중에서 이 모든 조건에 해당하는 것이 없어 여러 라
 #### [ Using Library ]
 
 * jQuery
-* alasql.js
-* datatables.js
+    - https://jquery.com/
+* alasql
+    - https://github.com/agershun/alasql
+* datatables
+    - https://datatables.net/
+* datatables-rowsgroup
+    - https://github.com/ashl1/datatables-rowsgroup
 
 #### [ parameter Info ]
 * row_field : pivot table 의 기준 row
@@ -41,3 +46,7 @@ Open Source 중에서 이 모든 조건에 해당하는 것이 없어 여러 라
 ```
 getPivotTable(row_field, col_field, aggregation_field)
 ```
+
+#### [ History ]
+
+* [ 2020.07.26 ] Pivot Table Library Sample 개발
