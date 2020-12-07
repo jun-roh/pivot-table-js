@@ -85,28 +85,28 @@
     </div>
     <div class="container">
         <div class="row">
-            <div id="test" style="width: 100%">
+            <div id="result" style="width: 100%">
             </div>
         </div>
     </div>
     </body>
     <script type="text/javascript">
-        var row_total_chk = true;
-        var mapping_cell = [];
-        var t = $("#pivot").DataTable({})
+        let row_total_chk = true;
+        let mapping_cell = [];
+        let t = $("#pivot").DataTable({})
 
         $(document).ready(function() {
-            var row_field = [{key: "row_val"}, {key: "row_val_1"}];
-            var col_field = [{key: "col_val"}, {key: "col_val_1"}];
-            var aggregation_field = [{
+            let row_field = [{key: "row_val"}, {key: "row_val_1"}];
+            let col_field = [{key: "col_val"}, {key: "col_val_1"}];
+            let aggregation_field = [{
                 key: "agg_val_1",
                 calculate: "sum"
             },{
                 key: "agg_val_2",
                 calculate: "avg"
             }];
-            var data_list = parameter;
-            setPivotTable('result_pivot', 'raw', true, data_list, row_field, col_field, aggregation_field);
+            let data_list = parameter;
+            setPivotTable('result', 'result_pivot', 'table', true, data_list, row_field, col_field, aggregation_field);
         });
     </script>
 </html>

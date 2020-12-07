@@ -6,7 +6,7 @@ const isEmpty = function (val) {
 
 
 const compareArrays = function(array1, array2) {
-    var i, isA1, isA2;
+    let i, isA1, isA2;
     isA1 = Array.isArray(array1);
     isA2 = Array.isArray(array2);
 
@@ -28,11 +28,24 @@ const compareArrays = function(array1, array2) {
     return true; // must be equal
 };
 
-const getListLength = function (data_list) {
-    if (isEmpty(data_list))
-        return 0;
-    else
+const getListLength = function (data_list, init_type) {
+    if (isEmpty(data_list)){
+        if (init_type)
+            return 1;
+        else
+            return 0;
+    } else {
         return data_list.length;
+    }
 };
 
 const intersect = function (a,b) { return $.grep(a,function(i){return $.inArray(i,b)>-1;}); };
+
+// 숫자 값 확인
+// 숫자 값이 아닐 경우에 return 0
+const intVal = function (i) {
+    return typeof i === 'string' ?
+        i.replace(/[\$,]/g, '') * 1 :
+        typeof i === 'number' ?
+            i : 0;
+};
