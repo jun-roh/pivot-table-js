@@ -39,7 +39,7 @@
         }
 
         div.container {
-            width: 100%;
+            width: 80%;
             margin: 2rem;
         }
 
@@ -51,50 +51,12 @@
     <body>
     <div class="container">
         <div class="row">
-            <div class="col-lg-2">
-                <div>
-                    <button onclick="showFooter()">show Footer</button>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div>
-                    <button onclick="hideFooter()">Hide Footer</button>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div>
-                    <button onclick="showRightSum()">show Right Sum</button>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div>
-                    <button onclick="hideRightSum()">hide Right Sum</button>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div>
-                    <button onclick="showSubTotal()">show Subtotal</button>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div>
-                    <button onclick="hideSubTotal()">hide Subtotal</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
             <div id="result" style="width: 100%">
             </div>
         </div>
     </div>
     </body>
     <script type="text/javascript">
-        let row_total_chk = true;
-        let mapping_cell = [];
-        let t = $("#pivot").DataTable({})
-
         $(document).ready(function() {
             let row_field = [{key: "row_val"}, {key: "row_val_1"}];
             let col_field = [{key: "col_val"}, {key: "col_val_1"}];
@@ -106,7 +68,28 @@
                 calculate: "avg"
             }];
             let data_list = parameter;
-            setPivotTable('result', 'result_pivot', 'table', true, data_list, row_field, col_field, aggregation_field);
+            // setPivotTable('result', 'result_pivot', 'table', true, data_list, row_field, col_field, aggregation_field);
+            setPivotTable({
+                target: 'result',
+                name: 'result_pivot',       // table 이름
+                type: 'table',              // type(table[스타일적용], raw[데이터만 적용])
+                data: {
+                    data_list: data_list,   // pivot 기반이 되는 전체 데이터
+                    row_field: row_field,   // row_field 정보
+                    column_field: col_field,// column_field 정보
+                    aggregation_field: aggregation_field // aggregation_field 정보
+                },
+                style: {
+                    pageLength: 25,         // 테이블 row 표시 갯수
+                    row_total: false,        // 행 합계 표시 여부
+                    column_total: false,     // footer 열 합계 표시 여부
+                    sub_total: false,        // sub total 표시 여부
+                    column_limit: {
+                        limit: true,
+                        limit_length: 101
+                    }
+                },
+            });
         });
     </script>
 </html>

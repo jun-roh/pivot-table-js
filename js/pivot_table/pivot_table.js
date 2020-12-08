@@ -1,37 +1,43 @@
 // Pivot table settings
-var setPivotTable = async function (div_name, table, type, isDraw, data_list, row_list, col_list, aggregation_list) {
+var setPivotTable = async function (object) {
     setTimeout(() => {
-        setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, col_list, aggregation_list);
+        setPivotTableRun(object);
     }, 100);
 };
 
-function setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, col_list, aggregation_list) {
-    var pivot_list = {
-        row_list: row_list,
-        col_list: col_list,
-        agg_list: aggregation_list
+function setPivotTableRun(object) {
+    let target = object.target;
+    let table = object.name;
+    let type = object.type;
+    let data_list = object.data.data_list;
+    let pivot_list = {
+        row_list: object.data.row_field,
+        col_list: object.data.column_field,
+        agg_list: object.data.aggregation_field
     }
+    let pivot_style = object.style;
 
     // pivot row 의 distinct data
-    let row_field_list = getDistinctQry(row_list, data_list);
+    let row_field_list = getDistinctQry(pivot_list.row_list, data_list);
 
     // pivot column 의 distinct data
-    let col_field_list = getDistinctQry(col_list, data_list);
+    let col_field_list = getDistinctQry(pivot_list.col_list, data_list);
     // 열 제한이 있을 경우에 열 제한해서 list 정리
-    col_field_list = $.extend(true, [], columnLimitList(col_field_list, aggregation_list, 10));
+    if (pivot_style.column_limit.limit)
+        col_field_list = $.extend(true, [], columnLimitList(col_field_list, pivot_list.agg_list, pivot_style.column_limit.limit_length));
 
     // pivot row field list 의 갯수
     let row_list_count = getListLength(row_field_list, false);
     // pivot column field list 의 갯수
     let col_list_count = getListLength(col_field_list, false);
     // pivot column field list 의 갯수
-    let agg_list_count = getListLength(aggregation_list, false);
+    let agg_list_count = getListLength(pivot_list.agg_list, false);
 
     // pivot cell 에 넣을 data
-    let result_list = getPivotQry(row_list, col_list, aggregation_list, data_list, row_field_list, col_field_list);
+    let result_list = getPivotQry(pivot_list.row_list, pivot_list.col_list, pivot_list.agg_list, data_list, row_field_list, col_field_list);
 
     // pivot column 의 개수
-    let cnt_col = getListLength(aggregation_list, true);
+    let cnt_col = getListLength(pivot_list.agg_list, true);
     for (let i in col_field_list)
         cnt_col *= getListLength(col_field_list[i], true);
 
@@ -41,7 +47,7 @@ function setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, co
         cnt_row *= getListLength(row_field_list[i], true);
 
     // pivot mapping cell
-    let mapping_result_cnt = setCellMapping(table, row_field_list, col_field_list, aggregation_list, result_list, type);
+    let mapping_result_cnt = setCellMapping(table, row_field_list, col_field_list, pivot_list.agg_list, result_list, type);
 
     let mapping_cell = mapping_result_cnt.cell_mapping_list;
 
@@ -50,10 +56,10 @@ function setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, co
     let col_mapping_list = mapping_result_cnt.col_mapping_list;
 
     // Draw pivot table
-    let html = drawPivotTable(table, row_field_list, col_field_list, aggregation_list, mapping_cell, result_list, pivot_list);
+    let html = drawPivotTable(table, row_field_list, col_field_list, pivot_list.agg_list, mapping_cell, result_list, pivot_list);
 
-    $('#' + div_name).html(null);
-    $('#' + div_name).html(html);
+    $('#' + target).html(null);
+    $('#' + target).html(html);
 
     // data import
     for (var i in result_list) {
@@ -62,7 +68,7 @@ function setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, co
             var str = "";
             var cur_cnt = 0;
             var cell_val = "";
-            var row_cnt = row_list.length;
+            var row_cnt = row_list_count;
             var r_list = [];
             var c_list = [];
             $.each(result_list[i][j], function (key, value) {
@@ -93,14 +99,14 @@ function setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, co
     let row_total_list = [];
     for (let i in mapping_cell) {
         let row_total = [];
-        for (let j in aggregation_list)
+        for (let j in pivot_list.agg_list)
             row_total.push(0);
         for (let j in mapping_cell[i]) {
-            let row_total_field = Number(j) % getListLength(aggregation_list, true);
+            let row_total_field = Number(j) % getListLength(pivot_list.agg_list, true);
             row_total[row_total_field] = row_total[row_total_field] + Number($("#" + table + "_row" + i + "_col" + j).text())
         }
         row_total_list.push(row_total);
-        for (let j in aggregation_list) {
+        for (let j in pivot_list.agg_list) {
             $("#" + table + "_row_total_" + j + "_" + i).html(row_total[Number(j)])
         }
     }
@@ -164,16 +170,16 @@ function setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, co
             let rows = api.rows({page: 'all'}).nodes();
             let last = null;
 
-            let title_cnt = getListLength(row_field_list, false);
+            let title_cnt = row_list_count;
             let data_cnt = mapping_cell_cnt;
 
             // Remove the formatting to get integer data for summation
             var total = [];
-            var view_cnt = data_cnt + getListLength(aggregation_list, false);
-            // if (!chart_pivot_style.pivot_row_total) {
-            // total cnt 추가
-            // view_cnt = view_cnt - getListLength(aggregation_list, false);
-            // }
+            var view_cnt = data_cnt + agg_list_count;
+            if (!pivot_style.row_total) {
+                //total cnt 추가
+                view_cnt = view_cnt - agg_list_count;
+            }
             $.each(api.column(0, {page: 'all'}).data(), function (i, group) {
                 let group_assoc = group.replace(' ', "_");
                 if (typeof total[group_assoc] != 'undefined') {
@@ -220,12 +226,11 @@ function setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, co
                     html += '<td colspan="' + title_cnt + '">' + group_assoc + ' Total : </td>';
                     let row_list = $.extend(true, [], total[group_assoc]);
                     let cell_cnt = data_cnt;
-                    let aggregation_length = getListLength(aggregation_list, false);
 
-                    let view_cnt = cell_cnt + aggregation_length;
-                    // if (!chart_pivot_style.pivot_row_total) {
-                    //     view_cnt = view_cnt - aggregation_field.length;
-                    // }
+                    let view_cnt = cell_cnt + agg_list_count;
+                    if (!pivot_style.row_total) {
+                        view_cnt = view_cnt - agg_list_count;
+                    }
 
                     for (let j = 0; j < view_cnt-row_cnt; j++) {
                         if (!(delete_columns.indexOf(Number(j) + Number(title_cnt)) > -1)) {
@@ -239,15 +244,27 @@ function setPivotTableRun(div_name, table, type, isDraw, data_list, row_list, co
                 }
             });
 
-            var cell_count = mapping_cell_cnt;
-            // if (!chart_pivot_style.pivot_row_total){
-            //     for (var i = cell_count; i < cell_count + aggregation_field.length; i++)
-            //         delete_columns.push(i)
-            // }
+            let cell_count = mapping_cell_cnt;
+            if (!pivot_style.row_total){
+                for (let i = cell_count; i < cell_count + agg_list_count; i++)
+                    delete_columns.push(i)
+            }
             this.api().columns().visible(true);
             this.api().columns(delete_columns).visible(false);
         },
     });
+
+    if (pivot_style.column_total) {
+        $('#' + table + '_pivot_footer').show();
+    } else {
+        $('#' + table + '_pivot_footer').hide();
+    }
+
+    if (pivot_style.sub_total) {
+        $('.group').show();
+    } else {
+        $('.group').hide();
+    }
 }
 
 // pivot 열 제한(너무 많을 경우 그리다가 뻗는 경우 제한을 두고 한정적으로 보여줌)
