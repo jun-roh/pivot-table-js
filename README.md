@@ -141,4 +141,6 @@ getPivotTable({
 * [ 2020.07.26 ] Pivot Table Library Sample 개발
 * [ 2020.12.08 ] Pivot Table 로직 변경
   - 비어있는 열, 행 삭제
+  - 열 제한 기능 추가
   - parameter 호출 방식 -> json option 형태로 변경
+ 
