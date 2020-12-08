@@ -58,8 +58,11 @@
     </body>
     <script type="text/javascript">
         $(document).ready(function() {
+            // row field 설정
             let row_field = [{key: "row_val"}, {key: "row_val_1"}];
+            // column field 설정
             let col_field = [{key: "col_val"}, {key: "col_val_1"}];
+            // aggregation field 설정
             let aggregation_field = [{
                 key: "agg_val_1",
                 calculate: "sum"
@@ -67,8 +70,9 @@
                 key: "agg_val_2",
                 calculate: "avg"
             }];
+            // 원본 데이터 설정
             let data_list = parameter;
-            // setPivotTable('result', 'result_pivot', 'table', true, data_list, row_field, col_field, aggregation_field);
+
             setPivotTable({
                 target: 'result',
                 name: 'result_pivot',       // table 이름
@@ -81,9 +85,9 @@
                 },
                 style: {
                     pageLength: 25,         // 테이블 row 표시 갯수
-                    row_total: false,        // 행 합계 표시 여부
-                    column_total: false,     // footer 열 합계 표시 여부
-                    sub_total: false,        // sub total 표시 여부
+                    row_total: true,        // 행 합계 표시 여부
+                    column_total: true,     // footer 열 합계 표시 여부
+                    sub_total: true,        // sub total 표시 여부
                     column_limit: {
                         limit: true,
                         limit_length: 101

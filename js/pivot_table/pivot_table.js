@@ -61,55 +61,8 @@ function setPivotTableRun(object) {
     $('#' + target).html(null);
     $('#' + target).html(html);
 
-    // data import
-    for (var i in result_list) {
-        var last_cnt = row_list_count + col_list_count;
-        for (var j in result_list[i]) {
-            var str = "";
-            var cur_cnt = 0;
-            var cell_val = "";
-            var row_cnt = row_list_count;
-            var r_list = [];
-            var c_list = [];
-            $.each(result_list[i][j], function (key, value) {
-                if (cur_cnt < row_cnt) {
-                    r_list.push(value);
-                } else {
-                    if (cur_cnt === last_cnt) {
-                        c_list.push(key);
-                        cell_val = value;
-                    } else
-                        c_list.push(value)
-                }
-                cur_cnt++;
-            });
-            var r_idx = row_mapping_list.findIndex((item, idx) => {
-                return JSON.stringify(item) === JSON.stringify(r_list);
-            });
-            var c_idx = col_mapping_list.findIndex((item, idx) => {
-                return JSON.stringify(item) === JSON.stringify(c_list);
-            });
-            str = "row" + r_idx + "_col" + c_idx;
-
-            $("#" + table + "_" + str).html(cell_val);
-        }
-    }
-
-    // row_total 계산
-    let row_total_list = [];
-    for (let i in mapping_cell) {
-        let row_total = [];
-        for (let j in pivot_list.agg_list)
-            row_total.push(0);
-        for (let j in mapping_cell[i]) {
-            let row_total_field = Number(j) % getListLength(pivot_list.agg_list, true);
-            row_total[row_total_field] = row_total[row_total_field] + Number($("#" + table + "_row" + i + "_col" + j).text())
-        }
-        row_total_list.push(row_total);
-        for (let j in pivot_list.agg_list) {
-            $("#" + table + "_row_total_" + j + "_" + i).html(row_total[Number(j)])
-        }
-    }
+    setPivotDataImport(table, result_list, row_list_count, col_list_count,
+                        row_mapping_list, col_mapping_list, mapping_cell, pivot_list.agg_list);
 
     let row_group_list = [];
     for (let i in row_field_list) {
@@ -125,7 +78,7 @@ function setPivotTableRun(object) {
         paging: true,
         lengthChange: true,
         lengthMenu: [10, 25, 50, 100, 250, 500, 1000],
-        pageLength: 25,
+        pageLength: pivot_style.pageLength,
         info: false,
         ordering: false,
         rowsGroup: row_group_list,
@@ -183,7 +136,7 @@ function setPivotTableRun(object) {
             $.each(api.column(0, {page: 'all'}).data(), function (i, group) {
                 let group_assoc = group.replace(' ', "_");
                 if (typeof total[group_assoc] != 'undefined') {
-                    for (let j = 0; j < view_cnt-row_cnt; j++) {
+                    for (let j = 0; j < view_cnt - row_list_count; j++) {
                         let cell_data = api.column(j + title_cnt).data()[i];
                         let pre_data = total[group_assoc][j];
                         let cell_cnt = 0;
@@ -203,7 +156,7 @@ function setPivotTableRun(object) {
                     }
                 } else {
                     let row_data = [];
-                    for (let j = 0; j < view_cnt-row_cnt; j++) {
+                    for (let j = 0; j < view_cnt-row_list_count; j++) {
                         let cell_cnt = 0;
                         let cell_data = api.column(Number(j) + Number(title_cnt)).data()[i];
                         if (!isEmpty(cell_data)) {
@@ -232,7 +185,7 @@ function setPivotTableRun(object) {
                         view_cnt = view_cnt - agg_list_count;
                     }
 
-                    for (let j = 0; j < view_cnt-row_cnt; j++) {
+                    for (let j = 0; j < view_cnt-row_list_count; j++) {
                         if (!(delete_columns.indexOf(Number(j) + Number(title_cnt)) > -1)) {
                             let cell_val = row_list[j];
                             html += '<td>' + cell_val + '</td>'
@@ -628,16 +581,55 @@ var drawPivotTable = function (table, row_field_list, col_field_list, aggregatio
     return html;
 };
 
-function showFooter() {
-    $('#pivot_footer').show();
-}
-function hideFooter() {
-    $('#pivot_footer').hide();
-}
+const setPivotDataImport = function (table, result_list, row_list_count, col_list_count,
+                                     row_mapping_list, col_mapping_list, mapping_cell, aggregation_list){
+    // data import
+    for (let i in result_list) {
+        let last_cnt = row_list_count + col_list_count;
+        for (let j in result_list[i]) {
+            let str = "";
+            let cur_cnt = 0;
+            let cell_val = "";
+            let row_cnt = row_list_count;
+            let r_list = [];
+            let c_list = [];
+            $.each(result_list[i][j], function (key, value) {
+                if (cur_cnt < row_cnt) {
+                    r_list.push(value);
+                } else {
+                    if (cur_cnt === last_cnt) {
+                        c_list.push(key);
+                        cell_val = value;
+                    } else
+                        c_list.push(value)
+                }
+                cur_cnt++;
+            });
+            let r_idx = row_mapping_list.findIndex((item, idx) => {
+                return JSON.stringify(item) === JSON.stringify(r_list);
+            });
+            let c_idx = col_mapping_list.findIndex((item, idx) => {
+                return JSON.stringify(item) === JSON.stringify(c_list);
+            });
+            str = "row" + r_idx + "_col" + c_idx;
 
-function showSubTotal() {
-    $(".group").show();
-}
-function hideSubTotal() {
-    $(".group").hide();
+            $("#" + table + "_" + str).html(cell_val);
+        }
+    }
+
+    // row_total 계산
+    let row_total_list = [];
+    for (let i in mapping_cell) {
+        let row_total = [];
+        for (let j in aggregation_list)
+            row_total.push(0);
+        for (let j in mapping_cell[i]) {
+            let row_total_field = Number(j) % getListLength(aggregation_list, true);
+            row_total[row_total_field] = row_total[row_total_field] + Number($("#" + table + "_row" + i + "_col" + j).text())
+        }
+        row_total_list.push(row_total);
+        for (let j in aggregation_list) {
+            $("#" + table + "_row_total_" + j + "_" + i).html(row_total[Number(j)])
+        }
+    }
 }
