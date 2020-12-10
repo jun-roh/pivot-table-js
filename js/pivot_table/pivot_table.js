@@ -1,11 +1,11 @@
 // Pivot table settings
-var setPivotTable = async function (object) {
+const setPivotTable = async function (object) {
     setTimeout(() => {
         setPivotTableRun(object);
     }, 100);
 };
 
-function setPivotTableRun(object) {
+const setPivotTableRun = function (object) {
     let target = object.target;
     let table = object.name;
     let type = object.type;
@@ -14,7 +14,8 @@ function setPivotTableRun(object) {
         row_list: object.data.row_field,
         col_list: object.data.column_field,
         agg_list: object.data.aggregation_field
-    }
+    };
+
     let pivot_style = object.style;
 
     // pivot row 의 distinct data
@@ -22,14 +23,17 @@ function setPivotTableRun(object) {
 
     // pivot column 의 distinct data
     let col_field_list = getDistinctQry(pivot_list.col_list, data_list);
+
     // 열 제한이 있을 경우에 열 제한해서 list 정리
     if (pivot_style.column_limit.limit)
         col_field_list = $.extend(true, [], columnLimitList(col_field_list, pivot_list.agg_list, pivot_style.column_limit.limit_length));
 
     // pivot row field list 의 갯수
     let row_list_count = getListLength(row_field_list, false);
+
     // pivot column field list 의 갯수
     let col_list_count = getListLength(col_field_list, false);
+
     // pivot column field list 의 갯수
     let agg_list_count = getListLength(pivot_list.agg_list, false);
 
@@ -47,7 +51,10 @@ function setPivotTableRun(object) {
         cnt_row *= getListLength(row_field_list[i], true);
 
     // pivot mapping cell
-    let mapping_result_cnt = setCellMapping(table, row_field_list, col_field_list, pivot_list.agg_list, result_list, type);
+    let mapping_result_cnt = setCellMapping(table, pivot_list.row_list, pivot_list.col_list,
+                                            row_field_list, col_field_list, pivot_list.agg_list, result_list, type);
+    console.log(mapping_result_cnt)
+    setCellMapping_bak(table, pivot_list.row_list, pivot_list.col_list, pivot_list.agg_list, result_list, type);
 
     let mapping_cell = mapping_result_cnt.cell_mapping_list;
 
@@ -218,10 +225,10 @@ function setPivotTableRun(object) {
     } else {
         $('.group').hide();
     }
-}
+};
 
 // pivot 열 제한(너무 많을 경우 그리다가 뻗는 경우 제한을 두고 한정적으로 보여줌)
-let columnLimitList = function (col_field_list, aggregation_list, limit_cnt){
+const columnLimitList = function (col_field_list, aggregation_list, limit_cnt){
     // 열 제한
     let col_limit_cnt = getListLength(aggregation_list, true);
     let copy_list = $.extend(true, [], col_field_list);
@@ -242,10 +249,70 @@ let columnLimitList = function (col_field_list, aggregation_list, limit_cnt){
         }
     }
     return copy_list;
-}
+};
 
 // pivot table cell mapping 리스트 설정
-const setCellMapping = function (table, row_field_list, col_field_list, aggregation_list, result_list) {
+const setCellMapping_bak = function (table, row_field_list, col_field_list, aggregation_list, result_list) {
+    let row_names_list = [];
+    let row_cnt = getListLength(row_field_list, false);
+    for (let i = 0; i < row_cnt; i++){
+        row_names_list.push(row_field_list[i].key);
+    }
+
+    let col_names_list = [];
+    let col_cnt = getListLength(col_field_list, false);
+    for (let i = 0; i < col_cnt; i++){
+        col_names_list.push(col_field_list[i].key);
+    }
+
+    let agg_names_list = [];
+    let agg_cnt = getListLength(aggregation_list, false);
+    for (let i = 0; i < agg_cnt; i++){
+        agg_names_list.push(aggregation_list[i].calculate + '_' + aggregation_list[i].key);
+    }
+
+    let concat_list = [];
+    for (let i in result_list){
+        concat_list = concat_list.concat(result_list[i]);
+    }
+
+
+};
+
+
+const setCellMapping = function (table, row_field_info, col_field_info, row_field_list, col_field_list, aggregation_list, result_list) {
+    let concat_list = [];
+    for (let i in result_list){
+        concat_list = concat_list.concat(result_list[i]);
+    }
+
+    let row_names_list = [];
+    let row_cnt = getListLength(row_field_info, false);
+    for (let i = 0; i < row_cnt; i++){
+        row_names_list.push(row_field_info[i].key);
+    }
+
+    // set_row_mapping_list
+    let row_mapping_list = [];
+    let row_str = '';
+    for (let i in row_names_list){
+        row_str += row_names_list[i];
+        if (Number(i) !== row_cnt -1)
+            row_str += ',';
+    }
+
+    let qry_row = 'select ' + row_str + ' from ? group by ' + row_str + ' order by ' + row_str;
+    alasql.options.cache = false;
+    let row_data = alasql(qry_row, [concat_list]);
+
+    for (let i in row_data){
+        let o = [];
+        for (let j in row_names_list){
+            o.push(row_data[i][row_names_list[j]]);
+        }
+        row_mapping_list.push(o);
+    }
+
     // column count list
     let col_count_list = [];
     for (let i in col_field_list) {
@@ -315,41 +382,6 @@ const setCellMapping = function (table, row_field_list, col_field_list, aggregat
         total_row_cnt = total_row_cnt * row_count_list[i];
     }
 
-    // prepare row_mapping_list(rows)
-    let row_mapping_list = [];
-    for (let i = 0; i < total_row_cnt; i++) {
-        row_mapping_list.push([]);
-    }
-
-    // prepare pivot row cell
-    // pivot row 전체 조건의 리스트 (pivot row 의 이름에 들어갈 데이터)
-    for (let i in row_count_list) {
-        let cnt = 0;
-
-        // i를 기준으로 후위 필드 cnt
-        let row_cnt_1 = 1;
-        for (let j = Number(i) + 1; j < getListLength(row_count_list, true); j++) {
-            row_cnt_1 = row_cnt_1 * row_count_list[j];
-        }
-
-        // i를 기준으로 전위 필드 cnt
-        let count_list_2 = $.extend(true, [], row_count_list);
-        count_list_2 = count_list_2.splice(0, i);
-        let row_cnt_2 = 1;
-        for (let j in count_list_2) {
-            row_cnt_2 = row_cnt_2 * count_list_2[j];
-        }
-
-        // rows 기준으로 cell 값 넣기
-        for (let m = 0; m < row_cnt_2; m++) {
-            for (let j in row_field_list[i]) {
-                for (let l = 0; l < row_cnt_1; l++) {
-                    row_mapping_list[cnt].push(row_field_list[Number(i)][j]);
-                    cnt++;
-                }
-            }
-        }
-    }
     // mapping 가능하도록 전체 cell 의 리스트
     let mapping_result = [];
     for (let i in row_mapping_list){
@@ -366,75 +398,17 @@ const setCellMapping = function (table, row_field_list, col_field_list, aggregat
         mapping_result.push(row);
     }
 
-    // mapping_result 에서 숫자를 줄여볼까?
-
-    // 사용하는 row 의 index 번호를 가져와야함
-    // 값이 없어도 경우의 수 전체를 리스트로 만들기 때문에 행의 수를 줄이기 위해서 사용하는 리스트만 가져와야 함
-    let last_cnt = getListLength(row_field_list, true) + getListLength(col_field_list, true);
-    let use_list = [];
-    for (let i in result_list) {
-        for (let j in result_list[i]) {
-            let cur_cnt = 0;
-            let cell_val = "";
-            let row_cnt = getListLength(row_field_list, true);
-            let r_list = [];
-            let c_list = [];
-            $.each(result_list[i][j], function (key, value) {
-                if (cur_cnt < row_cnt) {
-                    r_list.push(value);
-                } else {
-                    if (cur_cnt === last_cnt) {
-                        c_list.push(key);
-                        cell_val = value;
-                    } else
-                        c_list.push(value)
-                }
-                cur_cnt++;
-            });
-            let str = '';
-            for(let k in c_list){
-                str += c_list[k];
-                if (Number(k) < getListLength(c_list, true) - 1)
-                    str += '_';
-            }
-
-            r_list.push(str)
-            let row_list = r_list.slice(0, row_field_list.length);
-            for (let k in mapping_result){
-                let checkRole = intersect(mapping_result[k], row_list);
-                if (compareArrays(checkRole, row_list)){
-                    if ($.inArray(Number(k), use_list) === -1) use_list.push(Number(k));
-                }
-            }
-        }
-    }
-
-    // 사용하는 행의 리스트를 정렬함
-    use_list.sort(function(a, b)  {
-        if(a > b) return 1;
-        if(a === b) return 0;
-        if(a < b) return -1;
-    });
-
-    // 사용하는 row 들만 가지고 와서 result_mapping_list 리스트에 추가
-    let result_mapping_list = [];
-    let result_row_list = [];
-    for (let i in use_list){
-        result_mapping_list.push($.extend(true, [], mapping_result[use_list[i]]));
-        result_row_list.push($.extend(true, [], row_mapping_list[use_list[i]]));
-    }
-
     return {
         "col_mapping_list": col_mapping_list,
-        "row_mapping_list": result_row_list,
-        "cell_mapping_list": result_mapping_list
+        "row_mapping_list": row_mapping_list,
+        "cell_mapping_list": mapping_result
     };
 };
 
 // Pivot Table 구성
 // 값이 들어가지는 않고 틀만 생성
 // 추후 pivot 값을 통해서 해당 필드에 넣어 줘야 함
-var drawPivotTable = function (table, row_field_list, col_field_list, aggregation_list, mapping_cell, result_list, pivot_list, type) {
+const drawPivotTable = function (table, row_field_list, col_field_list, aggregation_list, mapping_cell, result_list, pivot_list, type) {
     let row_field_name_list = [];
     let col_field_name_list = [];
 
